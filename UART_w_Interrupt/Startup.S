@@ -3,7 +3,7 @@
 ; <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ;
 ;******************************************************************************
-Stack   EQU     0x00000100
+Stack   EQU     0x00000200
 
 ;******************************************************************************
 ;
@@ -21,6 +21,7 @@ Heap    EQU     0x00000000
 StackMem
         SPACE   Stack
 __initial_sp
+
 
 ;******************************************************************************
 ;
@@ -48,13 +49,7 @@ __heap_limit
         AREA    RESET, CODE, READONLY
         THUMB
 
-;******************************************************************************
-;
-; External declaration for the interrupt handler used by the application.
-;
-;******************************************************************************
-        EXTERN  UARTIntHandler
-
+		EXTERN myUARTIntHandler
 ;******************************************************************************
 ;
 ; The vector table.
@@ -83,7 +78,7 @@ __Vectors
         DCD     IntDefaultHandler           ; GPIO Port C
         DCD     IntDefaultHandler           ; GPIO Port D
         DCD     IntDefaultHandler           ; GPIO Port E
-        DCD     UARTIntHandler              ; UART0 Rx and Tx
+        DCD     myUARTIntHandler            ; UART0 Rx and Tx
         DCD     IntDefaultHandler           ; UART1 Rx and Tx
         DCD     IntDefaultHandler           ; SSI0 Rx and Tx
         DCD     IntDefaultHandler           ; I2C0 Master and Slave
@@ -224,6 +219,7 @@ __Vectors
 ; following a reset event.
 ;
 ;******************************************************************************
+		
         EXPORT  Reset_Handler
 Reset_Handler
         ;
@@ -261,6 +257,7 @@ Reset_Handler
 NmiSR
         B       NmiSR
 
+
 ;******************************************************************************
 ;
 ; This is the code that gets called when the processor receives a fault
@@ -280,6 +277,8 @@ FaultISR
 ;******************************************************************************
 IntDefaultHandler
         B       IntDefaultHandler
+		
+
 
 ;******************************************************************************
 ;
