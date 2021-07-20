@@ -1,3 +1,5 @@
+// ayengec: Stellaris Embedded MEMS Bosch BMP280 sensor with I2C LM4F120XL
+//
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/hw_i2c.h"
